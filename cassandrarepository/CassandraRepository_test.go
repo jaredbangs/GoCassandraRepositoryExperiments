@@ -11,5 +11,5 @@ func TestListKeyspaces(t *testing.T) {
 
 	repository.ListKeySpaces()
 
-	assert.NotNil(t, repository, "obj shouldn't be nil");
+	assert.NotNil(t, repository, "obj shouldn't be nil")
 }
