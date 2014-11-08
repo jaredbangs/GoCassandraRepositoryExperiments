@@ -1,14 +1,15 @@
 package cassandrarepository
 
-//import "fmt"
-//import "log"
-import "testing"
-//import "github.com/gocql/gocql"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestListKeyspaces(t *testing.T) {
 
-//	x := new CassandraRepository()
+	repository := NewRepository()
 
-//	x.ListKeyspaces()
-	
+	repository.ListKeySpaces()
+
+	assert.NotNil(t, repository, "obj shouldn't be nil");
 }

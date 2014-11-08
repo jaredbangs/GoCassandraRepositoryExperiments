@@ -1,9 +1,12 @@
 package cassandrarepository
 
-//import "fmt"
-//import "log"
-//import "github.com/gocql/gocql"
+type Repository struct {
+}
 
-func ListKeyspaces() {
+func NewRepository() *Repository {
+	return &Repository{}
+}
 
+func (repository *Repository) ListKeySpaces() string {
+	return "Hello"
 }
