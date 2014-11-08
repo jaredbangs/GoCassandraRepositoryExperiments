@@ -11,7 +11,7 @@ func NewRepository() *Repository {
 	return &Repository{}
 }
 
-func (repository *Repository) ListKeySpaces() *gocql.Iter {
+func (repository *Repository) ListKeyspaces() *gocql.Iter {
 	cluster := gocql.NewCluster("127.0.0.1")
 	cluster.Keyspace = "system"
 	cluster.Consistency = gocql.Quorum

@@ -9,7 +9,7 @@ func TestListKeyspaces(t *testing.T) {
 
 	repository := NewRepository()
 
-	repository.ListKeySpaces()
+	repository.ListKeyspaces()
 
 	assert.NotNil(t, repository, "obj shouldn't be nil")
 }

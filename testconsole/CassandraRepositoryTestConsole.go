@@ -10,7 +10,7 @@ func main() {
 
 	repo := cassandrarepository.NewRepository()
 
-	iter := repo.ListKeySpaces()
+	iter := repo.ListKeyspaces()
 
 	var name string
 
