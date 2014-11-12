@@ -3,21 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/jaredbangs/GoCassandraRepositoryExperiments/cassandrarepository"
-	"log"
 )
 
 func main() {
 
-	repo := cassandrarepository.NewRepository()
+	repo := cassandrarepository.NewRepository("127.0.0.1")
 
-	iter := repo.ListKeyspaces()
+	keyspaceNames := repo.ListKeyspaces()
 
-	var name string
-
-	for iter.Scan(&name) {
+	for _, name := range keyspaceNames {
 		fmt.Println(name)
-	}
-	if err := iter.Close(); err != nil {
-		log.Fatal(err)
 	}
 }

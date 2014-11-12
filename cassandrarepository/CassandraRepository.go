@@ -2,22 +2,46 @@ package cassandrarepository
 
 import (
 	"github.com/gocql/gocql"
+	"log"
 )
 
 type Repository struct {
+	Hosts []string
 }
 
-func NewRepository() *Repository {
-	return &Repository{}
+func NewRepository(hosts ...string) *Repository {
+	repository := &Repository{
+		Hosts: hosts,
+	}
+	return repository
 }
 
-func (repository *Repository) ListKeyspaces() *gocql.Iter {
-	cluster := gocql.NewCluster("127.0.0.1")
-	cluster.Keyspace = "system"
-	cluster.Consistency = gocql.Quorum
+func (repository *Repository) ListKeyspaces() []string {
 
-	session, _ := cluster.CreateSession()
+	session := repository.createSession("system", gocql.Quorum)
 	defer session.Close()
 
-	return session.Query(`SELECT keyspace_name FROM schema_keyspaces`).Iter()
+	iter := session.Query(`SELECT keyspace_name FROM schema_keyspaces`).Iter()
+
+	keyspaceNames := []string{}
+
+	var name string
+	for iter.Scan(&name) {
+		keyspaceNames = append(keyspaceNames, name)
+	}
+
+	if err := iter.Close(); err != nil {
+		log.Fatal(err)
+	}
+
+	return keyspaceNames
+}
+
+func (repository *Repository) createSession(keyspaceName string, consistency gocql.Consistency) *gocql.Session {
+	cluster := gocql.NewCluster(repository.Hosts...)
+	cluster.Keyspace = keyspaceName
+	cluster.Consistency = consistency
+
+	session, _ := cluster.CreateSession()
+	return session
 }
